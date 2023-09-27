@@ -1,1 +1,2 @@
 # Cyberreport_abstract
+用于做网络安全报告摘要抽取任务预研究的demo，在HUGGINGFACE下载对应的模型放到文件夹里即可，然后根据需求运行BRIO.py或者pegus.py即可，这两段程序来自于对应模型的说明文档。
