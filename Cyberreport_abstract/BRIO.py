@@ -1,0 +1,15 @@
+from transformers import AutoTokenizer, BartForConditionalGeneration
+
+model = BartForConditionalGeneration.from_pretrained("bart-large-cnn")
+tokenizer = AutoTokenizer.from_pretrained("bart-large-cnn")
+
+ARTICLE_TO_SUMMARIZE = (
+    "In the vast and enchanting forest of Mosswood, where ancient trees reach towards the heavens and the air is filled with the sweet scent of wildflowers, a magical journey awaits those who dare to venture deep within. The whispers of the wind carry tales of long-forgotten legends and mysterious creatures that dwell among the shadows. As the golden rays of the sun filter through the dense canopy, they cast an ethereal glow upon the forest floor, creating a kaleidoscope of colors that dance with every step，Amidst the towering trees, a quaint little cottage stands nestled in a clearing. It is said to be the home of an old hermit, a wise sage who possesses knowledge beyond imagination. Many seekers have tried to find the hermit to seek wisdom, but none have succeeded, for the forest is cunning and ever-changing, revealing its secrets only to the pure of heart.As the day turns to dusk, the forest comes alive with the soft hum of nocturnal creatures. Fireflies dance in the moonlight, their gentle glow illuminating the darkness. The night sky is a canvas of sparkling stars, and the hooting of owls echoes through the stillness.In this enchanted realm, time seems to stand still, and dreams merge with reality. Those who enter Mosswood find themselves immersed in a world of wonder and enchantment, where every step uncovers new mysteries and uncharted territories. The forest is both a friend and a foe, challenging the brave and rewarding the kind-hearted.Legends tell of a hidden portal within the heart of Mosswood, a gateway to realms beyond imagination. Only those who possess pure intentions can unlock its secrets and embark on journeys beyond their wildest dreams.In Mosswood, the line between reality and fantasy blurs, and the human heart finds solace amidst the ancient trees. As the first rays of dawn break through the horizon, the forest bids farewell to its visitors, knowing that they will return someday to seek its wisdom once more.And so, the enchanting tale of Mosswood continues to unfold, inviting wanderers from all walks of life to experience its magic and wonder. For in this mystical forest, the possibilities are endless, and the journey is but the beginning of a grand adventure."
+)
+inputs = tokenizer([ARTICLE_TO_SUMMARIZE], max_length=2048, truncation=True,return_tensors="pt",)
+print(inputs)
+# Generate Summary
+summary_ids = model.generate(inputs["input_ids"], num_beams=2, min_length=200, max_length=512)
+summary = tokenizer.batch_decode(summary_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
+print(summary)
+'PG&E scheduled the blackouts in response to forecasts for high winds amid dry conditions'
